@@ -1,7 +1,17 @@
 // const express = require('express');
 import express from "express";
+import { MongoClient } from "mongodb";
 const app = express();
 const PORT=4000;
+const MONGO_URL = "mongodb://127.0.0.1";
+async function createConnection() {
+    const client = new MongoClient(MONGO_URL);
+    await client.connect();
+    console.log("Mongo is connected ✌😊");
+    return client;
+  }
+  
+  const client = await createConnection();
 app.get('/', function (req, res) {
   res.send('Hello World');
 });
