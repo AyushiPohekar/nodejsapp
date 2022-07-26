@@ -49,6 +49,20 @@ app.get("/movies/:id", async function (request, response) {
     : response.status(404).send({ msg: "movie not found" });
 });
 
+app.delete("/movies/:id", async function (request, response) {
+    //db.movie.deleteOne({id:"101"})
+    const { id } = request.params;
+    console.log(request.params, id);
+  
+    const result = await client
+      .db("BATCH36db")
+      .collection("movies")
+      .deleteOne({ id: id });
+    result.deletedCount>0
+      ? response.send(movie successfully deleted)
+      : response.status(404).send({ msg: "movie not found" });
+  });
+
 app.post("/movies",async function (request, response) {
    const data=request.body;
    //db.movies.insertMany
