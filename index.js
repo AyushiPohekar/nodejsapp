@@ -79,5 +79,20 @@ app.post("/movies",async function (request, response) {
    response.send(result);
   });
 
+  app.put("/movies/:id", async function (request, response) {
+    
+    const { id } = request.params;
+    console.log(request.params, id);
+    const data=request.body;
+    //db.movies.updateOne({id:"101"},{$set:data})
+    const result = await client
+      .db("BATCH36db")
+      .collection("movies")
+      .updateOne({id:id},{$set:data})
+    result.modifiedCount>0
+      ? response.send({msg:"movie successfully updated"})
+      : response.status(404).send({ msg: "movie not found" });
+  });
+
 
 app.listen(PORT, () => console.log(`App started in ${PORT}`));
