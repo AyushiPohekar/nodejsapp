@@ -1,9 +1,15 @@
 // const express = require('express');
 import express, { request } from "express";
 import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
+
+dotenv.config();
+console.log(process.env.MONGO_URL);
+
 const app = express();
 const PORT = 4000;
-const MONGO_URL = "mongodb://127.0.0.1";
+
+const MONGO_URL = process.env.MONGO_URL;
 
 async function createConnection() {
   const client = new MongoClient(MONGO_URL);
@@ -59,7 +65,7 @@ app.delete("/movies/:id", async function (request, response) {
       .collection("movies")
       .deleteOne({ id: id });
     result.deletedCount>0
-      ? response.send(movie successfully deleted)
+      ? response.send({msg:"movie successfully deleted"})
       : response.status(404).send({ msg: "movie not found" });
   });
 
