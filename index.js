@@ -2,11 +2,13 @@
 import express, { request } from "express";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
+import cors from 'cors';
 
 dotenv.config();
 console.log(process.env.MONGO_URL);
 
 const app = express();
+
 const PORT = process.env.PORT;
 
 const MONGO_URL = process.env.MONGO_URL;
@@ -19,7 +21,7 @@ async function createConnection() {
 }
 
 const client = await createConnection();
-
+app.use(core())
 app.use(express.json());
 
 app.get("/", function (req, res) {
